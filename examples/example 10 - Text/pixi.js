@@ -4,7 +4,7 @@
  * Copyright (c) 2012, Mat Groves
  * http://goodboydigital.com/
  *
- * Compiled: 2013-05-06
+ * Compiled: 2013-05-09
  *
  * Pixi.JS is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license.php
@@ -867,8 +867,8 @@ PIXI.Text = function(text, style)
 
     this.setText(text);
     this.setStyle(style);
-    //this.updateText();
-    this.dirty = true;
+    this.updateText();
+    this.dirty = false;
 };
 
 // constructor
@@ -4929,13 +4929,13 @@ PIXI.SpriteSheetLoader.prototype.onJSONLoaded = function()
 				var rect = frameData[i].frame;
 				if (rect)
 				{
-					PIXI.TextureCache[i] = new PIXI.Texture(this.texture, {x:rect.x, y:rect.y, width:rect.w, height:rect.h});
+					PIXI.TextureCache[frameData[i].filename] = new PIXI.Texture(this.texture, {x:rect.x, y:rect.y, width:rect.w, height:rect.h});
 					
 					if(frameData[i].trimmed)
 					{
 						//var realSize = frameData[i].spriteSourceSize;
-						PIXI.TextureCache[i].realSize = frameData[i].spriteSourceSize;
-						PIXI.TextureCache[i].trim.x = 0;// (realSize.x / rect.w)
+						PIXI.TextureCache[frameData[i].filename].realSize = frameData[i].spriteSourceSize;
+						PIXI.TextureCache[frameData[i].filename].trim.x = 0;// (realSize.x / rect.w)
 						// calculate the offset!
 					}
 				}
