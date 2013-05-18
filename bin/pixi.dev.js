@@ -4,7 +4,7 @@
  * Copyright (c) 2012, Mat Groves
  * http://goodboydigital.com/
  *
- * Compiled: 2013-05-09
+ * Compiled: 2013-05-12
  *
  * Pixi.JS is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license.php
@@ -58,7 +58,7 @@ PIXI.Point = function(x, y)
  * @method clone
  * @return a copy of the point
  */
-PIXI.Point.clone = function()
+PIXI.Point.prototype.clone = function()
 {
 	return new PIXI.Point(this.x, this.y);
 }
@@ -115,7 +115,7 @@ PIXI.Rectangle = function(x, y, width, height)
  * @method clone
  * @return a copy of the rectangle
  */
-PIXI.Rectangle.clone = function()
+PIXI.Rectangle.prototype.clone = function()
 {
 	return new PIXI.Rectangle(this.x, this.y, this.width, this.height);
 }
@@ -847,7 +847,7 @@ PIXI.MovieClip.prototype.updateTransform = function()
  */
 
 /**
- * A Text Object will create a line(s) of text to split a line you can use "\n"
+ * A Text Object will create a line(s) of text. To split a line you can use "\n", "\r" or "\r\n"
  * @class Text
  * @extends Sprite
  * @constructor
@@ -898,7 +898,7 @@ PIXI.Text.prototype.setStyle = function(style)
 
 /**
  * Set the copy for the text object. To split a line you can use "\n"
- * @methos setText
+ * @method setText
  * @param {String} text The copy that you would like the text to display
  */
 PIXI.Sprite.prototype.setText = function(text)
@@ -916,7 +916,7 @@ PIXI.Text.prototype.updateText = function()
 	this.context.font = this.style.font;
 
 	//split text into lines
-	var lines = this.text.split("\n");
+	var lines = this.text.split(/(?:\r\n|\r|\n)/);
 
 	//calculate text width
 	var lineWidths = [];
@@ -998,9 +998,10 @@ PIXI.Text.prototype.updateTransform = function()
 	PIXI.Sprite.prototype.updateTransform.call(this);
 };
 
-/*
+/**
  * http://stackoverflow.com/users/34441/ellisbben
  * great solution to the problem!
+ * @private
  */
 PIXI.Text.prototype.determineFontHeight = function(fontStyle) 
 {
@@ -1042,19 +1043,18 @@ PIXI.Text.heightCache = {};
  */
 
 /**
- * A Text Object will create a line(s) of text using bitmap font 
+ * A Text Object will create a line(s) of text using bitmap font. To split a line you can use "\n", "\r" or "\r\n"
  * You can generate the fnt files using 
- * http://www.angelcode.com/products/bmfont/ for windows of
+ * http://www.angelcode.com/products/bmfont/ for windows or
  * http://www.bmglyph.com/ for mac.
  * @class BitmapText
  * @extends DisplayObjectContainer
  * @constructor
  * @param {String} text The copy that you would like the text to display
- * @param {Object} [style] The style parameters
- * @param {String} [style.font] default is "20pt Arial" The size and bitmap font id (must have loaded previously)
+ * @param {Object} style The style parameters
+ * @param {String} style.font The size (optional) and bitmap font id (required) eq "Arial" or "20px Arial" (must have loaded previously)
  * @param {String} [style.align="left"] An alignment of the multiline text ("left", "center" or "right")
  */
- //* @param {Object} [style.font="bold 20pt Arial"] The style and size of the font
 PIXI.BitmapText = function(text, style)
 {
     PIXI.DisplayObjectContainer.call(this);
@@ -1072,7 +1072,7 @@ PIXI.BitmapText.prototype = Object.create(PIXI.DisplayObjectContainer.prototype)
 
 /**
  * Set the copy for the text object
- * @methos setText
+ * @method setText
  * @param {String} text The copy that you would like the text to display
  */
 PIXI.BitmapText.prototype.setText = function(text)
@@ -1084,8 +1084,8 @@ PIXI.BitmapText.prototype.setText = function(text)
 /**
  * Set the style of the text
  * @method setStyle
- * @param {Object} [style] The style parameters
- * @param {Object} style.font The style and size of the font. If font size is not specified, it uses default bitmap font size. Font name is required
+ * @param {Object} style The style parameters
+ * @param {String} style.font The size (optional) and bitmap font id (required) eq "Arial" or "20px Arial" (must have loaded previously)
  * @param {String} [style.align="left"] An alignment of the multiline text ("left", "center" or "right")
  */
 PIXI.BitmapText.prototype.setStyle = function(style)
@@ -1118,7 +1118,7 @@ PIXI.BitmapText.prototype.updateText = function()
     for(var i = 0; i < this.text.length; i++)
     {
         var charCode = this.text.charCodeAt(i);
-        if(charCode == "\n".charCodeAt(0))
+        if(/(?:\r\n|\r|\n)/.test(this.text.charAt(i)))
         {
             lineWidths.push(pos.x);
             maxLineWidth = Math.max(maxLineWidth, pos.x);
@@ -4406,7 +4406,7 @@ PIXI.TilingSprite = function(texture, width, height)
 	 * @property tileScale
 	 * @type Point
 	 */	
-	this.tileScale = new PIXI.Point(2,1);
+	this.tileScale = new PIXI.Point(1,1);
 	/**
 	 * The offset position of the image that is being tiled
 	 * @property tileScale
