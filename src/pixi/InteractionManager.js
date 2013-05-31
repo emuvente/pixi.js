@@ -5,7 +5,7 @@
 
 
 /**
-The interaction manager deals with mouse and touch events. At this moment only Sprite's can be interactive.
+The interaction manager deals with mouse and touch events. Any DisplayObject can be interactive
 This manager also supports multitouch.
 @class InteractionManager
 @constructor
@@ -98,27 +98,22 @@ PIXI.InteractionManager.prototype.setTarget = function(target)
 		// DO some window specific touch!
 	}
 	
+	this.target = target;
+	target.view.addEventListener('mousemove',  this.onMouseMove.bind(this), true);
+	target.view.addEventListener('mousedown',  this.onMouseDown.bind(this), true);
+ 	document.body.addEventListener('mouseup',  this.onMouseUp.bind(this), true);
+ 	target.view.addEventListener('mouseout',   this.onMouseUp.bind(this), true);
 	
-	{
-		
-		this.target = target;
-		target.view.addEventListener('mousemove',  this.onMouseMove.bind(this), true);
-		target.view.addEventListener('mousedown',  this.onMouseDown.bind(this), true);
-	 	document.body.addEventListener('mouseup',  this.onMouseUp.bind(this), true);
-	 	target.view.addEventListener('mouseout',   this.onMouseUp.bind(this), true);
-		
-		// aint no multi touch just yet!
-		target.view.addEventListener("touchstart", this.onTouchStart.bind(this), true);
-		target.view.addEventListener("touchend", this.onTouchEnd.bind(this), true);
-		target.view.addEventListener("touchmove", this.onTouchMove.bind(this), true);
-	}
-	
-	
-	
+	// aint no multi touch just yet!
+	target.view.addEventListener("touchstart", this.onTouchStart.bind(this), true);
+	target.view.addEventListener("touchend", this.onTouchEnd.bind(this), true);
+	target.view.addEventListener("touchmove", this.onTouchMove.bind(this), true);
 }
 
 PIXI.InteractionManager.prototype.update = function()
 {
+	if(!this.target)return;
+	
 	// frequency of 30fps??
 	var now = Date.now();
 	var diff = now - this.last;
@@ -150,7 +145,7 @@ PIXI.InteractionManager.prototype.update = function()
 	// loop through interactive objects!
 	var length = this.interactiveItems.length;
 	
-	if(this.target)this.target.view.style.cursor = "default";	
+	this.target.view.style.cursor = "default";	
 				
 	for (var i = 0; i < length; i++)
 	{
@@ -226,9 +221,7 @@ PIXI.InteractionManager.prototype.onMouseDown = function(event)
 	
 	// loop through inteaction tree...
 	// hit test each item! -> 
-	// --->--->--->--->
 	// get interactive items under point??
-	// --->--->--->--->
 	//stage.__i
 	var length = this.interactiveItems.length;
 	var global = this.mouse.global;

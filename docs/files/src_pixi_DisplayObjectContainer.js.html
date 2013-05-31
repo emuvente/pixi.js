@@ -51,6 +51,8 @@
             
                 <li><a href="..&#x2F;classes/CanvasRenderer.html">CanvasRenderer</a></li>
             
+                <li><a href="..&#x2F;classes/CustomRenderable.html">CustomRenderable</a></li>
+            
                 <li><a href="..&#x2F;classes/DisplayObject.html">DisplayObject</a></li>
             
                 <li><a href="..&#x2F;classes/DisplayObjectContainer.html">DisplayObjectContainer</a></li>
@@ -66,6 +68,8 @@
                 <li><a href="..&#x2F;classes/Point.html">Point</a></li>
             
                 <li><a href="..&#x2F;classes/Rectangle.html">Rectangle</a></li>
+            
+                <li><a href="..&#x2F;classes/RenderTexture.html">RenderTexture</a></li>
             
                 <li><a href="..&#x2F;classes/Sprite.html">Sprite</a></li>
             
@@ -156,6 +160,18 @@ PIXI.DisplayObjectContainer = function()
 PIXI.DisplayObjectContainer.constructor = PIXI.DisplayObjectContainer;
 PIXI.DisplayObjectContainer.prototype = Object.create( PIXI.DisplayObject.prototype );
 
+&#x2F;&#x2F;TODO make visible a getter setter
+&#x2F;*
+Object.defineProperty(PIXI.DisplayObjectContainer.prototype, &#x27;visible&#x27;, {
+    get: function() {
+        return this._visible;
+    },
+    set: function(value) {
+        this._visible = value;
+        
+    }
+});*&#x2F;
+
 &#x2F;**
  * Adds a child to the container.
  * @method addChild
@@ -165,16 +181,26 @@ PIXI.DisplayObjectContainer.prototype.addChild = function(child)
 {
 	if(child.parent != undefined)
 	{
-		child.parent.removeChild(child)
+		child.parent.removeChild(child);
 	}
 	
 	child.parent = this;
 	child.childIndex = this.children.length;
 	
 	this.children.push(child);	
+	
 	if(this.stage)
 	{
 		this.stage.__addChild(child);
+	}
+	
+	&#x2F;&#x2F; need to remove any render groups..
+	if(this.__renderGroup)
+	{
+		&#x2F;&#x2F; being used by a renderTexture.. if it exists then it must be from a render texture;
+		if(child.__renderGroup)child.__renderGroup.removeDisplayObjectAndChildren(child);
+		&#x2F;&#x2F; add them to the new render group..
+		this.__renderGroup.addDisplayObjectAndChildren(child);
 	}
 }
 
@@ -214,6 +240,15 @@ PIXI.DisplayObjectContainer.prototype.addChildAt = function(child, index)
 		if(this.stage)
 		{
 			this.stage.__addChild(child);
+		}
+		
+		&#x2F;&#x2F; need to remove any render groups..
+		if(this.__renderGroup)
+		{
+			&#x2F;&#x2F; being used by a renderTexture.. if it exists then it must be from a render texture;
+			if(child.__renderGroup)child.__renderGroup.removeDisplayObjectAndChildren(child);
+			&#x2F;&#x2F; add them to the new render group..
+			this.__renderGroup.addDisplayObjectAndChildren(child);
 		}
 	}
 	else
@@ -290,12 +325,23 @@ PIXI.DisplayObjectContainer.prototype.getChildAt = function(index)
 PIXI.DisplayObjectContainer.prototype.removeChild = function(child)
 {
 	var index = this.children.indexOf( child );
-
+	
 	if ( index !== -1 ) 
 	{
-		if(this.stage)this.stage.__removeChild(child);
+		if(this.stage)
+		{
+			this.stage.__removeChild(child);
+		}
+		
+		&#x2F;&#x2F; webGL trim
+		if(child.__renderGroup)
+		{
+			child.__renderGroup.removeDisplayObjectAndChildren(child);
+		}
+		
+	&#x2F;&#x2F;	console.log(&quot;&gt;&quot; + child.__renderGroup)
 		child.parent = undefined;
-		&#x2F;&#x2F;child.childIndex = 0
+
 		this.children.splice( index, 1 );
 	
 		&#x2F;&#x2F; update in dexs!

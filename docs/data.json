@@ -7,6 +7,15 @@
         "logo": "http://www.goodboydigital.com/pixijs/logo_small.png"
     },
     "files": {
+        "src/pixi/extras/CustomRenderable.js": {
+            "name": "src/pixi/extras/CustomRenderable.js",
+            "modules": {},
+            "classes": {
+                "CustomRenderable": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
         "src/pixi/extras/Rope.js": {
             "name": "src/pixi/extras/Rope.js",
             "modules": {},
@@ -78,6 +87,13 @@
         "src/pixi/renderers/WebGLBatch.js": {
             "name": "src/pixi/renderers/WebGLBatch.js",
             "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/pixi/renderers/WebGLRenderGroup.js": {
+            "name": "src/pixi/renderers/WebGLRenderGroup.js",
+            "modules": {},
             "classes": {
                 "WebGLBatch": 1
             },
@@ -123,6 +139,15 @@
             "modules": {},
             "classes": {
                 "BaseTexture": 1
+            },
+            "fors": {},
+            "namespaces": {}
+        },
+        "src/pixi/textures/RenderTexture.js": {
+            "name": "src/pixi/textures/RenderTexture.js",
+            "modules": {},
+            "classes": {
+                "RenderTexture": 1
             },
             "fors": {},
             "namespaces": {}
@@ -259,6 +284,7 @@
             "name": "PIXI",
             "submodules": {},
             "classes": {
+                "CustomRenderable": 1,
                 "TilingSprite": 1,
                 "AssetLoader": 1,
                 "BitmapFontLoader": 1,
@@ -270,6 +296,7 @@
                 "BitmapText": 1,
                 "Text": 1,
                 "BaseTexture": 1,
+                "RenderTexture": 1,
                 "Texture": 1,
                 "DisplayObject": 1,
                 "DisplayObjectContainer": 1,
@@ -289,6 +316,21 @@
         }
     },
     "classes": {
+        "CustomRenderable": {
+            "name": "CustomRenderable",
+            "shortname": "CustomRenderable",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "PIXI",
+            "file": "src/pixi/extras/CustomRenderable.js",
+            "line": 6,
+            "description": "Need to finalize this a bit more but works! Its in but will be working on this feature properly next..:)",
+            "extends": "DisplayObject",
+            "is_constructor": 1
+        },
         "TilingSprite": {
             "name": "TilingSprite",
             "shortname": "TilingSprite",
@@ -470,8 +512,8 @@
             "plugin_for": [],
             "extension_for": [],
             "module": "PIXI",
-            "file": "src/pixi/renderers/WebGLBatch.js",
-            "line": 42,
+            "file": "src/pixi/renderers/WebGLRenderGroup.js",
+            "line": 8,
             "description": "A WebGLBatch Enables a group of sprites to be drawn using the same settings.\nif a group of sprites all have the same baseTexture and blendMode then they can be grouped into a batch. All the sprites in a batch can then be drawn in one go by the GPU which is hugely efficient. ALL sprites in the webGL renderer are added to a batch even if the batch only contains one sprite. Batching is handled automatically by the webGL renderer. A good tip is: the smaller the number of batchs there are, the faster the webGL renderer will run.",
             "params": [
                 {
@@ -494,7 +536,7 @@
             "extension_for": [],
             "module": "PIXI",
             "file": "src/pixi/renderers/WebGLRenderer.js",
-            "line": 7,
+            "line": 11,
             "description": "the WebGLRenderer is draws the stage and all its content onto a webGL enabled canvas. This renderer should be used for browsers support webGL. This Render works by automatically managing webGLBatchs. So no need for Sprite Batch's or Sprite Cloud's\nDont forget to add the view to your DOM or you will not see anything :)",
             "is_constructor": 1,
             "params": [
@@ -532,7 +574,7 @@
             "module": "PIXI",
             "file": "src/pixi/text/BitmapText.js",
             "line": 5,
-            "description": "A Text Object will create a line(s) of text using bitmap font \nYou can generate the fnt files using \nhttp://www.angelcode.com/products/bmfont/ for windows of\nhttp://www.bmglyph.com/ for mac.",
+            "description": "A Text Object will create a line(s) of text using bitmap font. To split a line you can use \"\\n\", \"\\r\" or \"\\r\\n\"\nYou can generate the fnt files using \nhttp://www.angelcode.com/products/bmfont/ for windows or\nhttp://www.bmglyph.com/ for mac.",
             "extends": "DisplayObjectContainer",
             "is_constructor": 1,
             "params": [
@@ -545,13 +587,11 @@
                     "name": "style",
                     "description": "The style parameters",
                     "type": "Object",
-                    "optional": true,
                     "props": [
                         {
                             "name": "font",
-                            "description": "default is \"20pt Arial\" The size and bitmap font id (must have loaded previously)",
-                            "type": "String",
-                            "optional": true
+                            "description": "The size (optional) and bitmap font id (required) eq \"Arial\" or \"20px Arial\" (must have loaded previously)",
+                            "type": "String"
                         },
                         {
                             "name": "align",
@@ -649,6 +689,33 @@
                 }
             ]
         },
+        "RenderTexture": {
+            "name": "RenderTexture",
+            "shortname": "RenderTexture",
+            "classitems": [],
+            "plugins": [],
+            "extensions": [],
+            "plugin_for": [],
+            "extension_for": [],
+            "module": "PIXI",
+            "file": "src/pixi/textures/RenderTexture.js",
+            "line": 5,
+            "description": "A RenderTexture is a special texture that allows any pixi displayObject to be rendered to it.",
+            "extends": "Texture",
+            "is_constructor": 1,
+            "params": [
+                {
+                    "name": "width",
+                    "description": "",
+                    "type": "Number"
+                },
+                {
+                    "name": "height",
+                    "description": "",
+                    "type": "Number"
+                }
+            ]
+        },
         "Texture": {
             "name": "Texture",
             "shortname": "Texture",
@@ -716,7 +783,7 @@
             "module": "PIXI",
             "file": "src/pixi/InteractionManager.js",
             "line": 7,
-            "description": "The interaction manager deals with mouse and touch events. At this moment only Sprite's can be interactive.\nThis manager also supports multitouch.",
+            "description": "The interaction manager deals with mouse and touch events. Any DisplayObject can be interactive\nThis manager also supports multitouch.",
             "is_constructor": 1,
             "params": [
                 {
@@ -737,7 +804,7 @@
             "extension_for": [],
             "module": "PIXI",
             "file": "src/pixi/InteractionManager.js",
-            "line": 513,
+            "line": 506,
             "is_constructor": 1
         },
         "MovieClip": {
@@ -880,6 +947,12 @@
     },
     "classitems": [
         {
+            "file": "src/pixi/extras/CustomRenderable.js",
+            "line": 1,
+            "author": "Mat Groves http://matgroves.com/ @Doormat23",
+            "class": "CustomRenderable"
+        },
+        {
             "file": "src/pixi/extras/Rope.js",
             "line": 1,
             "author": "Mat Groves http://matgroves.com/",
@@ -911,7 +984,7 @@
             "line": 29,
             "description": "The offset position of the image that is being tiled",
             "itemtype": "property",
-            "name": "tileScale",
+            "name": "tilePosition",
             "type": "Point",
             "class": "TilingSprite"
         },
@@ -1097,7 +1170,7 @@
         },
         {
             "file": "src/pixi/renderers/CanvasRenderer.js",
-            "line": 112,
+            "line": 110,
             "description": "resizes the canvas view to the specified width and height",
             "params": [
                 {
@@ -1113,28 +1186,28 @@
         },
         {
             "file": "src/pixi/renderers/CanvasRenderer.js",
-            "line": 126,
+            "line": 124,
             "access": "private",
             "tagname": "",
             "class": "CanvasRenderer"
         },
         {
             "file": "src/pixi/renderers/CanvasRenderer.js",
-            "line": 203,
+            "line": 210,
             "access": "private",
             "tagname": "",
             "class": "CanvasRenderer"
         },
         {
             "file": "src/pixi/renderers/CanvasRenderer.js",
-            "line": 238,
+            "line": 245,
             "access": "private",
             "tagname": "",
             "class": "CanvasRenderer"
         },
         {
             "file": "src/pixi/renderers/CanvasRenderer.js",
-            "line": 267,
+            "line": 274,
             "access": "private",
             "tagname": "",
             "class": "CanvasRenderer"
@@ -1301,10 +1374,51 @@
         },
         {
             "file": "src/pixi/renderers/WebGLBatch.js",
-            "line": 491,
+            "line": 513,
             "description": "Draws the batch to the frame buffer",
             "itemtype": "method",
             "name": "render",
+            "class": "WebGLBatch"
+        },
+        {
+            "file": "src/pixi/renderers/WebGLRenderGroup.js",
+            "line": 1,
+            "author": "Mat Groves http://matgroves.com/ @Doormat23",
+            "class": "WebGLBatch"
+        },
+        {
+            "file": "src/pixi/renderers/WebGLRenderGroup.js",
+            "line": 527,
+            "access": "private",
+            "tagname": "",
+            "class": "WebGLBatch"
+        },
+        {
+            "file": "src/pixi/renderers/WebGLRenderGroup.js",
+            "line": 613,
+            "access": "private",
+            "tagname": "",
+            "class": "WebGLBatch"
+        },
+        {
+            "file": "src/pixi/renderers/WebGLRenderGroup.js",
+            "line": 669,
+            "access": "private",
+            "tagname": "",
+            "class": "WebGLBatch"
+        },
+        {
+            "file": "src/pixi/renderers/WebGLRenderGroup.js",
+            "line": 746,
+            "access": "private",
+            "tagname": "",
+            "class": "WebGLBatch"
+        },
+        {
+            "file": "src/pixi/renderers/WebGLRenderGroup.js",
+            "line": 783,
+            "access": "private",
+            "tagname": "",
             "class": "WebGLBatch"
         },
         {
@@ -1315,35 +1429,28 @@
         },
         {
             "file": "src/pixi/renderers/WebGLRenderer.js",
-            "line": 73,
+            "line": 81,
             "access": "private",
             "tagname": "",
             "class": "WebGLRenderer"
         },
         {
             "file": "src/pixi/renderers/WebGLRenderer.js",
-            "line": 88,
+            "line": 96,
             "access": "private",
             "tagname": "",
             "class": "WebGLRenderer"
         },
         {
             "file": "src/pixi/renderers/WebGLRenderer.js",
-            "line": 98,
+            "line": 106,
             "access": "private",
             "tagname": "",
             "class": "WebGLRenderer"
         },
         {
             "file": "src/pixi/renderers/WebGLRenderer.js",
-            "line": 137,
-            "access": "private",
-            "tagname": "",
-            "class": "WebGLRenderer"
-        },
-        {
-            "file": "src/pixi/renderers/WebGLRenderer.js",
-            "line": 187,
+            "line": 144,
             "description": "Renders the stage to its webGL view",
             "itemtype": "method",
             "name": "render",
@@ -1358,28 +1465,14 @@
         },
         {
             "file": "src/pixi/renderers/WebGLRenderer.js",
+            "line": 225,
+            "access": "private",
+            "tagname": "",
+            "class": "WebGLRenderer"
+        },
+        {
+            "file": "src/pixi/renderers/WebGLRenderer.js",
             "line": 284,
-            "access": "private",
-            "tagname": "",
-            "class": "WebGLRenderer"
-        },
-        {
-            "file": "src/pixi/renderers/WebGLRenderer.js",
-            "line": 337,
-            "access": "private",
-            "tagname": "",
-            "class": "WebGLRenderer"
-        },
-        {
-            "file": "src/pixi/renderers/WebGLRenderer.js",
-            "line": 540,
-            "access": "private",
-            "tagname": "",
-            "class": "WebGLRenderer"
-        },
-        {
-            "file": "src/pixi/renderers/WebGLRenderer.js",
-            "line": 617,
             "description": "resizes the webGL view to the specified width and height",
             "itemtype": "method",
             "name": "resize",
@@ -1399,42 +1492,14 @@
         },
         {
             "file": "src/pixi/renderers/WebGLRenderer.js",
-            "line": 642,
+            "line": 308,
             "access": "private",
             "tagname": "",
             "class": "WebGLRenderer"
         },
         {
             "file": "src/pixi/renderers/WebGLRenderer.js",
-            "line": 722,
-            "access": "private",
-            "tagname": "",
-            "class": "WebGLRenderer"
-        },
-        {
-            "file": "src/pixi/renderers/WebGLRenderer.js",
-            "line": 762,
-            "access": "private",
-            "tagname": "",
-            "class": "WebGLRenderer"
-        },
-        {
-            "file": "src/pixi/renderers/WebGLRenderer.js",
-            "line": 790,
-            "access": "private",
-            "tagname": "",
-            "class": "WebGLRenderer"
-        },
-        {
-            "file": "src/pixi/renderers/WebGLRenderer.js",
-            "line": 867,
-            "access": "private",
-            "tagname": "",
-            "class": "WebGLRenderer"
-        },
-        {
-            "file": "src/pixi/renderers/WebGLRenderer.js",
-            "line": 876,
+            "line": 317,
             "access": "private",
             "tagname": "",
             "class": "WebGLRenderer"
@@ -1453,9 +1518,10 @@
         },
         {
             "file": "src/pixi/text/BitmapText.js",
-            "line": 34,
+            "line": 33,
             "description": "Set the copy for the text object",
-            "methos": "setText",
+            "itemtype": "method",
+            "name": "setText",
             "params": [
                 {
                     "name": "text",
@@ -1467,7 +1533,7 @@
         },
         {
             "file": "src/pixi/text/BitmapText.js",
-            "line": 45,
+            "line": 44,
             "description": "Set the style of the text",
             "itemtype": "method",
             "name": "setStyle",
@@ -1476,12 +1542,11 @@
                     "name": "style",
                     "description": "The style parameters",
                     "type": "Object",
-                    "optional": true,
                     "props": [
                         {
                             "name": "font",
-                            "description": "The style and size of the font. If font size is not specified, it uses default bitmap font size. Font name is required",
-                            "type": "Object"
+                            "description": "The size (optional) and bitmap font id (required) eq \"Arial\" or \"20px Arial\" (must have loaded previously)",
+                            "type": "String"
                         },
                         {
                             "name": "align",
@@ -1497,7 +1562,7 @@
         },
         {
             "file": "src/pixi/text/BitmapText.js",
-            "line": 65,
+            "line": 64,
             "description": "Renders text",
             "access": "private",
             "tagname": "",
@@ -1505,7 +1570,7 @@
         },
         {
             "file": "src/pixi/text/BitmapText.js",
-            "line": 138,
+            "line": 137,
             "access": "private",
             "tagname": "",
             "class": "BitmapText"
@@ -1518,7 +1583,7 @@
         },
         {
             "file": "src/pixi/text/Text.js",
-            "line": 34,
+            "line": 35,
             "description": "Set the style of the text",
             "itemtype": "method",
             "name": "setStyle",
@@ -1568,7 +1633,7 @@
         },
         {
             "file": "src/pixi/text/Text.js",
-            "line": 55,
+            "line": 56,
             "description": "Set the copy for the text object. To split a line you can use \"\\n\"",
             "methos": "setText",
             "params": [
@@ -1582,7 +1647,7 @@
         },
         {
             "file": "src/pixi/text/Text.js",
-            "line": 66,
+            "line": 67,
             "description": "Renders text",
             "access": "private",
             "tagname": "",
@@ -1590,7 +1655,7 @@
         },
         {
             "file": "src/pixi/text/Text.js",
-            "line": 129,
+            "line": 130,
             "description": "Updates texture size based on canvas size",
             "access": "private",
             "tagname": "",
@@ -1598,7 +1663,7 @@
         },
         {
             "file": "src/pixi/text/Text.js",
-            "line": 143,
+            "line": 148,
             "access": "private",
             "tagname": "",
             "class": "Text"
@@ -1638,7 +1703,7 @@
         },
         {
             "file": "src/pixi/textures/BaseTexture.js",
-            "line": 102,
+            "line": 103,
             "description": "Helper function that returns a base texture based on an image url\n If the image is not in the base texture cache it will be  created and loaded",
             "static": 1,
             "itemtype": "method",
@@ -1654,6 +1719,32 @@
                 "description": "BaseTexture"
             },
             "class": "BaseTexture"
+        },
+        {
+            "file": "src/pixi/textures/RenderTexture.js",
+            "line": 1,
+            "author": "Mat Groves http://matgroves.com/ @Doormat23",
+            "class": "RenderTexture"
+        },
+        {
+            "file": "src/pixi/textures/RenderTexture.js",
+            "line": 90,
+            "description": "This function will draw the display object to the texture.",
+            "itemtype": "method",
+            "name": "render",
+            "params": [
+                {
+                    "name": "displayObject",
+                    "description": "",
+                    "type": "DisplayObject"
+                },
+                {
+                    "name": "clear",
+                    "description": "If true the texture will not be cleared before the displayObject is drawn",
+                    "type": "Boolean"
+                }
+            ],
+            "class": "RenderTexture"
         },
         {
             "file": "src/pixi/textures/Texture.js",
@@ -1754,6 +1845,7 @@
             "file": "src/pixi/textures/Texture.js",
             "line": 158,
             "description": "Adds a texture to the textureCache.",
+            "static": 1,
             "itemtype": "method",
             "name": "addTextureToCache",
             "params": [
@@ -1772,8 +1864,9 @@
         },
         {
             "file": "src/pixi/textures/Texture.js",
-            "line": 170,
+            "line": 171,
             "description": "Remove a texture from the textureCache.",
+            "static": 1,
             "itemtype": "method",
             "name": "removeTextureFromCache",
             "params": [
@@ -1872,6 +1965,15 @@
         {
             "file": "src/pixi/DisplayObject.js",
             "line": 26,
+            "description": "The pivot point of the displayObject that it rotates around",
+            "itemtype": "property",
+            "name": "pivot",
+            "type": "Point",
+            "class": "DisplayObject"
+        },
+        {
+            "file": "src/pixi/DisplayObject.js",
+            "line": 33,
             "description": "The rotation of the object in radians.",
             "itemtype": "property",
             "name": "rotation",
@@ -1880,7 +1982,7 @@
         },
         {
             "file": "src/pixi/DisplayObject.js",
-            "line": 33,
+            "line": 40,
             "description": "The opacity of the object.",
             "itemtype": "property",
             "name": "alpha",
@@ -1889,7 +1991,7 @@
         },
         {
             "file": "src/pixi/DisplayObject.js",
-            "line": 40,
+            "line": 47,
             "description": "The visibility of the object.",
             "itemtype": "property",
             "name": "visible",
@@ -1898,7 +2000,7 @@
         },
         {
             "file": "src/pixi/DisplayObject.js",
-            "line": 48,
+            "line": 55,
             "description": "[read-only] The display object container that contains this display object.",
             "itemtype": "property",
             "name": "parent",
@@ -1907,7 +2009,7 @@
         },
         {
             "file": "src/pixi/DisplayObject.js",
-            "line": 55,
+            "line": 62,
             "description": "[read-only] The stage the display object is connected to, or undefined if it is not connected to the stage.",
             "itemtype": "property",
             "name": "stage",
@@ -1916,7 +2018,7 @@
         },
         {
             "file": "src/pixi/DisplayObject.js",
-            "line": 62,
+            "line": 69,
             "description": "This is the defined area that will pick up mouse / touch events. It is null by default.\nSetting it is a neat way of optimising the hitTest function that the interactionManager will use (as it will not need to hit test all the children)",
             "itemtype": "property",
             "name": "hitArea",
@@ -1925,7 +2027,7 @@
         },
         {
             "file": "src/pixi/DisplayObject.js",
-            "line": 86,
+            "line": 95,
             "description": "This is used to indicate if the displayObject should display a mouse hand cursor on rollover",
             "itemtype": "property",
             "name": "buttonMode",
@@ -1934,7 +2036,7 @@
         },
         {
             "file": "src/pixi/DisplayObject.js",
-            "line": 97,
+            "line": 106,
             "description": "A callback that is used when the users clicks on the displayObject with their mouse",
             "itemtype": "method",
             "name": "click",
@@ -1949,7 +2051,7 @@
         },
         {
             "file": "src/pixi/DisplayObject.js",
-            "line": 103,
+            "line": 112,
             "description": "A callback that is used when the user clicks the mouse down over the sprite",
             "itemtype": "method",
             "name": "mousedown",
@@ -1964,7 +2066,7 @@
         },
         {
             "file": "src/pixi/DisplayObject.js",
-            "line": 109,
+            "line": 118,
             "description": "A callback that is used when the user releases the mouse that was over the displayObject\nfor this callback to be fired the mouse must have been pressed down over the displayObject",
             "itemtype": "method",
             "name": "mouseup",
@@ -1979,7 +2081,7 @@
         },
         {
             "file": "src/pixi/DisplayObject.js",
-            "line": 116,
+            "line": 125,
             "description": "A callback that is used when the user releases the mouse that was over the displayObject but is no longer over the displayObject\nfor this callback to be fired, The touch must have started over the displayObject",
             "itemtype": "method",
             "name": "mouseupoutside",
@@ -1994,7 +2096,7 @@
         },
         {
             "file": "src/pixi/DisplayObject.js",
-            "line": 123,
+            "line": 132,
             "description": "A callback that is used when the users mouse rolls over the displayObject",
             "itemtype": "method",
             "name": "mouseover",
@@ -2009,7 +2111,7 @@
         },
         {
             "file": "src/pixi/DisplayObject.js",
-            "line": 129,
+            "line": 138,
             "description": "A callback that is used when the users mouse leaves the displayObject",
             "itemtype": "method",
             "name": "mouseout",
@@ -2024,7 +2126,7 @@
         },
         {
             "file": "src/pixi/DisplayObject.js",
-            "line": 140,
+            "line": 149,
             "description": "A callback that is used when the users taps on the sprite with their finger\nbasically a touch version of click",
             "itemtype": "method",
             "name": "tap",
@@ -2039,7 +2141,7 @@
         },
         {
             "file": "src/pixi/DisplayObject.js",
-            "line": 147,
+            "line": 156,
             "description": "A callback that is used when the user touch's over the displayObject",
             "itemtype": "method",
             "name": "touchstart",
@@ -2054,7 +2156,7 @@
         },
         {
             "file": "src/pixi/DisplayObject.js",
-            "line": 153,
+            "line": 162,
             "description": "A callback that is used when the user releases a touch over the displayObject",
             "itemtype": "method",
             "name": "touchend",
@@ -2069,7 +2171,7 @@
         },
         {
             "file": "src/pixi/DisplayObject.js",
-            "line": 159,
+            "line": 168,
             "description": "A callback that is used when the user releases the touch that was over the displayObject\nfor this callback to be fired, The touch must have started over the sprite",
             "itemtype": "method",
             "name": "touchendoutside",
@@ -2084,7 +2186,7 @@
         },
         {
             "file": "src/pixi/DisplayObject.js",
-            "line": 170,
+            "line": 190,
             "description": "Indicates if the sprite will have touch and mouse interactivity. It is false by default",
             "itemtype": "method",
             "name": "setInteractive",
@@ -2099,7 +2201,7 @@
         },
         {
             "file": "src/pixi/DisplayObject.js",
-            "line": 184,
+            "line": 204,
             "access": "private",
             "tagname": "",
             "class": "DisplayObject"
@@ -2121,7 +2223,7 @@
         },
         {
             "file": "src/pixi/DisplayObjectContainer.js",
-            "line": 29,
+            "line": 41,
             "description": "Adds a child to the container.",
             "itemtype": "method",
             "name": "addChild",
@@ -2136,7 +2238,7 @@
         },
         {
             "file": "src/pixi/DisplayObjectContainer.js",
-            "line": 51,
+            "line": 73,
             "description": "Adds a child to the container at a specified index. If the index is out of bounds an error will be thrown",
             "itemtype": "method",
             "name": "addChildAt",
@@ -2156,7 +2258,7 @@
         },
         {
             "file": "src/pixi/DisplayObjectContainer.js",
-            "line": 97,
+            "line": 128,
             "description": "Swaps the depth of 2 displayObjects",
             "itemtype": "method",
             "name": "swapChildren",
@@ -2176,7 +2278,7 @@
         },
         {
             "file": "src/pixi/DisplayObjectContainer.js",
-            "line": 137,
+            "line": 168,
             "description": "Returns the Child at the specified index",
             "itemtype": "method",
             "name": "getChildAt",
@@ -2191,7 +2293,7 @@
         },
         {
             "file": "src/pixi/DisplayObjectContainer.js",
-            "line": 155,
+            "line": 186,
             "description": "Removes a child from the container.",
             "itemtype": "method",
             "name": "removeChild",
@@ -2206,7 +2308,7 @@
         },
         {
             "file": "src/pixi/DisplayObjectContainer.js",
-            "line": 184,
+            "line": 226,
             "access": "private",
             "tagname": "",
             "class": "DisplayObjectContainer"
@@ -2246,7 +2348,7 @@
         },
         {
             "file": "src/pixi/InteractionManager.js",
-            "line": 519,
+            "line": 512,
             "description": "This point stores the global coords of where the touch/mouse event happened",
             "itemtype": "property",
             "name": "global",
@@ -2255,7 +2357,7 @@
         },
         {
             "file": "src/pixi/InteractionManager.js",
-            "line": 529,
+            "line": 522,
             "description": "The target Sprite that was interacted with",
             "itemtype": "property",
             "name": "target",
@@ -2264,7 +2366,7 @@
         },
         {
             "file": "src/pixi/InteractionManager.js",
-            "line": 537,
+            "line": 530,
             "description": "This will return the local coords of the specified displayObject for this InteractionData",
             "itemtype": "method",
             "name": "getLocalPosition",
@@ -2631,7 +2733,7 @@
         },
         {
             "file": "src/pixi/Stage.js",
-            "line": 37,
+            "line": 38,
             "itemtype": "method",
             "name": "updateTransform",
             "internal": "",
@@ -2640,7 +2742,7 @@
         },
         {
             "file": "src/pixi/Stage.js",
-            "line": 60,
+            "line": 61,
             "itemtype": "method",
             "name": "setBackgroundColor",
             "params": [
@@ -2655,7 +2757,7 @@
         },
         {
             "file": "src/pixi/Stage.js",
-            "line": 71,
+            "line": 72,
             "description": "This will return the point containing global coords of the mouse.",
             "itemtype": "method",
             "name": "getMousePosition",
@@ -2674,15 +2776,15 @@
         },
         {
             "message": "unknown tag: methos",
-            "line": " src/pixi/text/BitmapText.js:34"
-        },
-        {
-            "message": "unknown tag: methos",
-            "line": " src/pixi/text/Text.js:55"
+            "line": " src/pixi/text/Text.js:56"
         },
         {
             "message": "unknown tag: internal",
-            "line": " src/pixi/Stage.js:37"
+            "line": " src/pixi/Stage.js:38"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/pixi/extras/CustomRenderable.js:1"
         },
         {
             "message": "Missing item type",
@@ -2758,23 +2860,23 @@
         },
         {
             "message": "Missing item type\nresizes the canvas view to the specified width and height",
-            "line": " src/pixi/renderers/CanvasRenderer.js:112"
+            "line": " src/pixi/renderers/CanvasRenderer.js:110"
         },
         {
             "message": "Missing item type",
-            "line": " src/pixi/renderers/CanvasRenderer.js:126"
+            "line": " src/pixi/renderers/CanvasRenderer.js:124"
         },
         {
             "message": "Missing item type",
-            "line": " src/pixi/renderers/CanvasRenderer.js:203"
+            "line": " src/pixi/renderers/CanvasRenderer.js:210"
         },
         {
             "message": "Missing item type",
-            "line": " src/pixi/renderers/CanvasRenderer.js:238"
+            "line": " src/pixi/renderers/CanvasRenderer.js:245"
         },
         {
             "message": "Missing item type",
-            "line": " src/pixi/renderers/CanvasRenderer.js:267"
+            "line": " src/pixi/renderers/CanvasRenderer.js:274"
         },
         {
             "message": "Missing item type",
@@ -2802,59 +2904,55 @@
         },
         {
             "message": "Missing item type",
+            "line": " src/pixi/renderers/WebGLRenderGroup.js:1"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/pixi/renderers/WebGLRenderGroup.js:527"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/pixi/renderers/WebGLRenderGroup.js:613"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/pixi/renderers/WebGLRenderGroup.js:669"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/pixi/renderers/WebGLRenderGroup.js:746"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/pixi/renderers/WebGLRenderGroup.js:783"
+        },
+        {
+            "message": "Missing item type",
             "line": " src/pixi/renderers/WebGLRenderer.js:1"
         },
         {
             "message": "Missing item type",
-            "line": " src/pixi/renderers/WebGLRenderer.js:73"
+            "line": " src/pixi/renderers/WebGLRenderer.js:81"
         },
         {
             "message": "Missing item type",
-            "line": " src/pixi/renderers/WebGLRenderer.js:88"
+            "line": " src/pixi/renderers/WebGLRenderer.js:96"
         },
         {
             "message": "Missing item type",
-            "line": " src/pixi/renderers/WebGLRenderer.js:98"
+            "line": " src/pixi/renderers/WebGLRenderer.js:106"
         },
         {
             "message": "Missing item type",
-            "line": " src/pixi/renderers/WebGLRenderer.js:137"
+            "line": " src/pixi/renderers/WebGLRenderer.js:225"
         },
         {
             "message": "Missing item type",
-            "line": " src/pixi/renderers/WebGLRenderer.js:284"
+            "line": " src/pixi/renderers/WebGLRenderer.js:308"
         },
         {
             "message": "Missing item type",
-            "line": " src/pixi/renderers/WebGLRenderer.js:337"
-        },
-        {
-            "message": "Missing item type",
-            "line": " src/pixi/renderers/WebGLRenderer.js:540"
-        },
-        {
-            "message": "Missing item type",
-            "line": " src/pixi/renderers/WebGLRenderer.js:642"
-        },
-        {
-            "message": "Missing item type",
-            "line": " src/pixi/renderers/WebGLRenderer.js:722"
-        },
-        {
-            "message": "Missing item type",
-            "line": " src/pixi/renderers/WebGLRenderer.js:762"
-        },
-        {
-            "message": "Missing item type",
-            "line": " src/pixi/renderers/WebGLRenderer.js:790"
-        },
-        {
-            "message": "Missing item type",
-            "line": " src/pixi/renderers/WebGLRenderer.js:867"
-        },
-        {
-            "message": "Missing item type",
-            "line": " src/pixi/renderers/WebGLRenderer.js:876"
+            "line": " src/pixi/renderers/WebGLRenderer.js:317"
         },
         {
             "message": "Missing item type",
@@ -2865,16 +2963,12 @@
             "line": " src/pixi/text/BitmapText.js:1"
         },
         {
-            "message": "Missing item type\nSet the copy for the text object",
-            "line": " src/pixi/text/BitmapText.js:34"
-        },
-        {
             "message": "Missing item type\nRenders text",
-            "line": " src/pixi/text/BitmapText.js:65"
+            "line": " src/pixi/text/BitmapText.js:64"
         },
         {
             "message": "Missing item type",
-            "line": " src/pixi/text/BitmapText.js:138"
+            "line": " src/pixi/text/BitmapText.js:137"
         },
         {
             "message": "Missing item type",
@@ -2882,23 +2976,27 @@
         },
         {
             "message": "Missing item type\nSet the copy for the text object. To split a line you can use \"\\n\"",
-            "line": " src/pixi/text/Text.js:55"
+            "line": " src/pixi/text/Text.js:56"
         },
         {
             "message": "Missing item type\nRenders text",
-            "line": " src/pixi/text/Text.js:66"
+            "line": " src/pixi/text/Text.js:67"
         },
         {
             "message": "Missing item type\nUpdates texture size based on canvas size",
-            "line": " src/pixi/text/Text.js:129"
+            "line": " src/pixi/text/Text.js:130"
         },
         {
             "message": "Missing item type",
-            "line": " src/pixi/text/Text.js:143"
+            "line": " src/pixi/text/Text.js:148"
         },
         {
             "message": "Missing item type",
             "line": " src/pixi/textures/BaseTexture.js:1"
+        },
+        {
+            "message": "Missing item type",
+            "line": " src/pixi/textures/RenderTexture.js:1"
         },
         {
             "message": "Missing item type",
@@ -2926,7 +3024,7 @@
         },
         {
             "message": "Missing item type",
-            "line": " src/pixi/DisplayObject.js:184"
+            "line": " src/pixi/DisplayObject.js:204"
         },
         {
             "message": "Missing item type",
@@ -2934,7 +3032,7 @@
         },
         {
             "message": "Missing item type",
-            "line": " src/pixi/DisplayObjectContainer.js:184"
+            "line": " src/pixi/DisplayObjectContainer.js:226"
         },
         {
             "message": "Missing item type",

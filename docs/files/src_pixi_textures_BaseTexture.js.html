@@ -51,6 +51,8 @@
             
                 <li><a href="..&#x2F;classes/CanvasRenderer.html">CanvasRenderer</a></li>
             
+                <li><a href="..&#x2F;classes/CustomRenderable.html">CustomRenderable</a></li>
+            
                 <li><a href="..&#x2F;classes/DisplayObject.html">DisplayObject</a></li>
             
                 <li><a href="..&#x2F;classes/DisplayObjectContainer.html">DisplayObjectContainer</a></li>
@@ -66,6 +68,8 @@
                 <li><a href="..&#x2F;classes/Point.html">Point</a></li>
             
                 <li><a href="..&#x2F;classes/Rectangle.html">Rectangle</a></li>
+            
+                <li><a href="..&#x2F;classes/RenderTexture.html">RenderTexture</a></li>
             
                 <li><a href="..&#x2F;classes/Sprite.html">Sprite</a></li>
             
@@ -174,6 +178,8 @@ PIXI.BaseTexture = function(source)
 	 *&#x2F;
 	this.source = source&#x2F;&#x2F;new Image();
 	
+	if(!source)return;
+	
 	if(this.source instanceof Image)
 	{
 		if(this.source.complete)
@@ -207,7 +213,6 @@ PIXI.BaseTexture = function(source)
 		this.width = this.source.width;
 		this.height = this.source.height;
 			
-		&#x2F;&#x2F;console.log(&quot;&gt;!!&quot;,this.width)
 		PIXI.texturesToUpdate.push(this);
 	}
 	
