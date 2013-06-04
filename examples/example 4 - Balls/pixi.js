@@ -4,11 +4,7 @@
  * Copyright (c) 2012, Mat Groves
  * http://goodboydigital.com/
  *
-<<<<<<< HEAD
- * Compiled: 2013-05-12
-=======
- * Compiled: 2013-05-24
->>>>>>> upstream/master
+ * Compiled: 2013-05-31
  *
  * Pixi.JS is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license.php
@@ -922,7 +918,7 @@ PIXI.MovieClip.prototype.updateTransform = function()
  */
 
 /**
- * A Text Object will create a line(s) of text. To split a line you can use "\n", "\r" or "\r\n"
+ * A Text Object will create a line(s) of text to split a line you can use "\n"
  * @class Text
  * @extends Sprite
  * @constructor
@@ -942,12 +938,8 @@ PIXI.Text = function(text, style)
 
     this.setText(text);
     this.setStyle(style);
-<<<<<<< HEAD
-    this.updateText();
-=======
     
      this.updateText();
->>>>>>> upstream/master
     this.dirty = false;
 };
 
@@ -978,7 +970,7 @@ PIXI.Text.prototype.setStyle = function(style)
 
 /**
  * Set the copy for the text object. To split a line you can use "\n"
- * @method setText
+ * @methos setText
  * @param {String} text The copy that you would like the text to display
  */
 PIXI.Sprite.prototype.setText = function(text)
@@ -1082,10 +1074,9 @@ PIXI.Text.prototype.updateTransform = function()
 	PIXI.Sprite.prototype.updateTransform.call(this);
 };
 
-/**
+/*
  * http://stackoverflow.com/users/34441/ellisbben
  * great solution to the problem!
- * @private
  */
 PIXI.Text.prototype.determineFontHeight = function(fontStyle) 
 {
@@ -5158,20 +5149,40 @@ PIXI.Texture.frameUpdates = [];
  */
 
 /**
- * A RenderTexture is a special texture that allows any pixi displayObject to be rendered to it. 
- * @class RenderTexture
- * @extends Texture
- * @constructor
- * @param width {Number}
- * @param height {Number}
- */
+ A RenderTexture is a special texture that allows any pixi displayObject to be rendered to it.
+
+ __Hint__: All DisplayObjects (exmpl. Sprites) that renders on RenderTexture should be preloaded. 
+ Otherwise black rectangles will be drawn instead.  
+ 
+ RenderTexture takes snapshot of DisplayObject passed to render method. If DisplayObject is passed to render method, position and rotation of it will be ignored. For example:
+ 
+	var renderTexture = new PIXI.RenderTexture(800, 600);
+	var sprite = PIXI.Sprite.fromImage("spinObj_01.png");
+	sprite.position.x = 800/2;
+	sprite.position.y = 600/2;
+	sprite.anchor.x = 0.5;
+	sprite.anchor.y = 0.5;
+	renderTexture.render(sprite);
+
+ Sprite in this case will be rendered to 0,0 position. To render this sprite at center DisplayObjectContainer should be used:
+
+	var doc = new PIXI.DisplayObjectContainer();
+	doc.addChild(sprite);
+	renderTexture.render(doc);  // Renders to center of renderTexture
+
+ @class RenderTexture
+ @extends Texture
+ @constructor
+ @param width {Number}
+ @param height {Number}
+ **/
 PIXI.RenderTexture = function(width, height)
 {
 	PIXI.EventTarget.call( this );
 	
 	this.width = width || 100;
 	this.height = height || 100;
-	
+
 	this.indetityMatrix = PIXI.mat3.create();
 	
 	this.frame = new PIXI.Rectangle(0, 0, this.width, this.height);	
@@ -5246,7 +5257,7 @@ PIXI.RenderTexture.prototype.initCanvas = function()
  * This function will draw the display object to the texture.
  * @method render
  * @param displayObject {DisplayObject}
- * @param clear {Boolean} If true the texture will not be cleared before the displayObject is drawn
+ * @param clear {Boolean} If true the texture will be cleared before the displayObject is drawn
  */
 PIXI.RenderTexture.prototype.renderWebGL = function(displayObject, clear)
 {

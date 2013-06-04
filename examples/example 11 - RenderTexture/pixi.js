@@ -4,7 +4,7 @@
  * Copyright (c) 2012, Mat Groves
  * http://goodboydigital.com/
  *
- * Compiled: 2013-05-24
+ * Compiled: 2013-05-31
  *
  * Pixi.JS is licensed under the MIT License.
  * http://www.opensource.org/licenses/mit-license.php
@@ -5149,20 +5149,40 @@ PIXI.Texture.frameUpdates = [];
  */
 
 /**
- * A RenderTexture is a special texture that allows any pixi displayObject to be rendered to it. 
- * @class RenderTexture
- * @extends Texture
- * @constructor
- * @param width {Number}
- * @param height {Number}
- */
+ A RenderTexture is a special texture that allows any pixi displayObject to be rendered to it.
+
+ __Hint__: All DisplayObjects (exmpl. Sprites) that renders on RenderTexture should be preloaded. 
+ Otherwise black rectangles will be drawn instead.  
+ 
+ RenderTexture takes snapshot of DisplayObject passed to render method. If DisplayObject is passed to render method, position and rotation of it will be ignored. For example:
+ 
+	var renderTexture = new PIXI.RenderTexture(800, 600);
+	var sprite = PIXI.Sprite.fromImage("spinObj_01.png");
+	sprite.position.x = 800/2;
+	sprite.position.y = 600/2;
+	sprite.anchor.x = 0.5;
+	sprite.anchor.y = 0.5;
+	renderTexture.render(sprite);
+
+ Sprite in this case will be rendered to 0,0 position. To render this sprite at center DisplayObjectContainer should be used:
+
+	var doc = new PIXI.DisplayObjectContainer();
+	doc.addChild(sprite);
+	renderTexture.render(doc);  // Renders to center of renderTexture
+
+ @class RenderTexture
+ @extends Texture
+ @constructor
+ @param width {Number}
+ @param height {Number}
+ **/
 PIXI.RenderTexture = function(width, height)
 {
 	PIXI.EventTarget.call( this );
 	
 	this.width = width || 100;
 	this.height = height || 100;
-	
+
 	this.indetityMatrix = PIXI.mat3.create();
 	
 	this.frame = new PIXI.Rectangle(0, 0, this.width, this.height);	
@@ -5237,7 +5257,7 @@ PIXI.RenderTexture.prototype.initCanvas = function()
  * This function will draw the display object to the texture.
  * @method render
  * @param displayObject {DisplayObject}
- * @param clear {Boolean} If true the texture will not be cleared before the displayObject is drawn
+ * @param clear {Boolean} If true the texture will be cleared before the displayObject is drawn
  */
 PIXI.RenderTexture.prototype.renderWebGL = function(displayObject, clear)
 {
@@ -5483,13 +5503,13 @@ PIXI.SpriteSheetLoader.prototype.onJSONLoaded = function()
 				var rect = frameData[i].frame;
 				if (rect)
 				{
-					PIXI.TextureCache[i] = new PIXI.Texture(this.texture, {x:rect.x, y:rect.y, width:rect.w, height:rect.h});
+					PIXI.TextureCache[frameData[i].filename] = new PIXI.Texture(this.texture, {x:rect.x, y:rect.y, width:rect.w, height:rect.h});
 					
 					if(frameData[i].trimmed)
 					{
 						//var realSize = frameData[i].spriteSourceSize;
-						PIXI.TextureCache[i].realSize = frameData[i].spriteSourceSize;
-						PIXI.TextureCache[i].trim.x = 0;// (realSize.x / rect.w)
+						PIXI.TextureCache[frameData[i].filename].realSize = frameData[i].spriteSourceSize;
+						PIXI.TextureCache[frameData[i].filename].trim.x = 0;// (realSize.x / rect.w)
 						// calculate the offset!
 					}
 				}
