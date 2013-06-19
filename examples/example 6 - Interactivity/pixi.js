@@ -9156,6 +9156,8 @@ PIXI.InteractionManager.prototype.onMouseMove = function(event)
 
 PIXI.InteractionManager.prototype.onMouseDown = function(event)
 {
+	event.preventDefault();
+	
 	// loop through inteaction tree...
 	// hit test each item! -> 
 	// get interactive items under point??
@@ -9192,6 +9194,8 @@ PIXI.InteractionManager.prototype.onMouseDown = function(event)
 
 PIXI.InteractionManager.prototype.onMouseUp = function(event)
 {
+	
+	
 	var global = this.mouse.global;
 	
 	
