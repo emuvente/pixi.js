@@ -90,7 +90,6 @@ PIXI.BaseTexture.constructor = PIXI.BaseTexture;
 
 PIXI.BaseTexture.prototype.destroy = function()
 {
-	
 	if(this.source instanceof Image)
 	{
 		this.source.src = null;
@@ -98,7 +97,6 @@ PIXI.BaseTexture.prototype.destroy = function()
 	this.source = null;
 	PIXI.texturesToDestroy.push(this);
 }
-
 
 /**
  * 
@@ -114,7 +112,9 @@ PIXI.BaseTexture.fromImage = function(imageUrl, crossorigin)
 	var baseTexture = PIXI.BaseTextureCache[imageUrl];
 	if(!baseTexture)
 	{
-		var image = new Image();
+		// new Image() breaks tex loading in some versions of Chrome.
+		// See https://code.google.com/p/chromium/issues/detail?id=238071
+		var image = new Image();//document.createElement('img'); 
 		if (crossorigin)
 		{
 			image.crossOrigin = '';
