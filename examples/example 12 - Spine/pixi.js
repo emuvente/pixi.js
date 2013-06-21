@@ -1777,6 +1777,8 @@ PIXI.InteractionManager.prototype.onTouchMove = function(event)
 
 PIXI.InteractionManager.prototype.onTouchStart = function(event)
 {
+	event.preventDefault();
+	
 	var rect = this.target.view.getBoundingClientRect();
 	
 	var changedTouches = event.changedTouches;
